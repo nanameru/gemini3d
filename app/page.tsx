@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import FileUpload from "./components/ui/file-upload";
 import ApiKeyInput from "./components/ui/api-key-input";
 import Loading from "./components/ui/loading";
 import ErrorMessage from "./components/ui/error-message";
 import PhysicsScene from "./components/3d/physics-scene";
+import type { PhysicsModelData } from "./components/3d/physics-scene";
 import { initGemini, analyzeDiagram } from "./lib/gemini";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
@@ -14,10 +15,10 @@ export default function Home() {
   const [apiKey, setApiKey] = useState<string>("");
   const [genAI, setGenAI] = useState<GoogleGenerativeAI | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  // const [imageFile, setImageFile] = useState<File | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [modelData, setModelData] = useState<any | null>(null);
+  const [modelData, setModelData] = useState<PhysicsModelData | null>(null);
 
   useEffect(() => {
     if (apiKey) {
@@ -35,7 +36,6 @@ export default function Home() {
   }, [apiKey]);
 
   const handleFileSelected = (file: File, base64: string) => {
-    setImageFile(file);
     setSelectedImage(base64);
     setModelData(null);
     setError(null);
@@ -57,8 +57,9 @@ export default function Home() {
     try {
       const data = await analyzeDiagram(genAI, selectedImage);
       setModelData(data);
-    } catch (err: any) {
-      setError(`Error analyzing image: ${err.message || "Unknown error"}`);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Unknown error";
+      setError(`Error analyzing image: ${errorMessage}`);
       console.error("Error analyzing image:", err);
     } finally {
       setIsAnalyzing(false);
@@ -66,7 +67,7 @@ export default function Home() {
   };
 
   const handleUseSampleData = () => {
-    const sampleData = {
+    const sampleData: PhysicsModelData = {
       "objects": [
         {
           "id": "lever",
@@ -244,7 +245,7 @@ export default function Home() {
                 </svg>
                 <h3 className="text-lg font-medium">No 3D Model Yet</h3>
                 <p className="text-gray-500 dark:text-gray-400 mt-2 max-w-md">
-                  Upload a physics diagram and click "Analyze with Gemini" to generate a 3D model, or click "Use Sample Data" to see an example.
+                  Upload a physics diagram and click &quot;Analyze with Gemini&quot; to generate a 3D model, or click &quot;Use Sample Data&quot; to see an example.
                 </p>
               </div>
             )}

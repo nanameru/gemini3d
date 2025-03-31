@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { OrbitControls, PerspectiveCamera, Grid, Environment } from "@react-three/drei";
+import { useRef, useEffect } from "react";
+import { Canvas, useThree } from "@react-three/fiber";
+import { OrbitControls, Grid, Environment } from "@react-three/drei";
 import * as THREE from "three";
 
 interface PhysicsObject {
@@ -14,7 +14,7 @@ interface PhysicsObject {
   color: string;
   properties: {
     mass: number;
-    [key: string]: any;
+    [key: string]: number | string | boolean;
   };
 }
 
@@ -29,16 +29,16 @@ interface PhysicsInteraction {
   type: string;
   objects: string[];
   properties: {
-    [key: string]: any;
+    [key: string]: number | string | boolean;
   };
 }
 
-interface PhysicsModelData {
+export interface PhysicsModelData {
   objects: PhysicsObject[];
   physics: {
     type: string;
     properties: {
-      [key: string]: any;
+      [key: string]: number | string | boolean | number[];
     };
     forces: PhysicsForce[];
   };
@@ -90,8 +90,6 @@ const ForceArrow = ({ force }: { force: PhysicsForce }) => {
   
   const start = new THREE.Vector3(...application_point);
   const end = new THREE.Vector3().copy(start).add(dir);
-  
-  const points = [start, end];
   
   return (
     <group>
