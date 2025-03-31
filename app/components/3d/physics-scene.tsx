@@ -144,7 +144,7 @@ const Scene = ({ modelData }: { modelData: PhysicsModelData }) => {
 
 export default function PhysicsScene({ modelData }: { modelData: PhysicsModelData }) {
   return (
-    <div className="w-full h-[500px] rounded-lg overflow-hidden">
+    <div className="w-full h-[300px] sm:h-[400px] md:h-[450px] lg:h-[500px] rounded-lg overflow-hidden">
       <Canvas shadows>
         <Scene modelData={modelData} />
       </Canvas>

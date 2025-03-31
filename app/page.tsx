@@ -148,22 +148,22 @@ export default function Home() {
       </header>
 
       <main className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
           {/* Left column - Input */}
-          <div className="space-y-6">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-4">1. Enter API Key</h2>
+          <div className="space-y-4 sm:space-y-6">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6">
+              <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">1. Enter API Key</h2>
               <ApiKeyInput onApiKeyChange={handleApiKeyChange} />
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-4">2. Upload Physics Diagram</h2>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6">
+              <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">2. Upload Physics Diagram</h2>
               <FileUpload onFileSelected={handleFileSelected} />
               
               {selectedImage && (
-                <div className="mt-4">
-                  <h3 className="text-lg font-medium mb-2">Selected Image:</h3>
-                  <div className="relative w-full h-48 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden">
+                <div className="mt-3 sm:mt-4">
+                  <h3 className="text-base sm:text-lg font-medium mb-2">Selected Image:</h3>
+                  <div className="relative w-full h-36 sm:h-48 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden">
                     <img
                       src={`data:image/png;base64,${selectedImage}`}
                       alt="Selected physics diagram"
@@ -174,13 +174,13 @@ export default function Home() {
               )}
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-4">3. Generate 3D Model</h2>
-              <div className="flex gap-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6">
+              <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">3. Generate 3D Model</h2>
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
                 <button
                   onClick={handleAnalyze}
                   disabled={!selectedImage || !apiKey || isAnalyzing}
-                  className={`px-4 py-2 rounded-lg flex-1 ${
+                  className={`px-3 sm:px-4 py-2 rounded-lg w-full ${
                     !selectedImage || !apiKey || isAnalyzing
                       ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                       : "bg-blue-600 text-white hover:bg-blue-700"
@@ -191,14 +191,14 @@ export default function Home() {
                 
                 <button
                   onClick={handleUseSampleData}
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 flex-1"
+                  className="px-3 sm:px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 w-full mt-2 sm:mt-0"
                 >
                   Use Sample Data
                 </button>
               </div>
               
               {error && (
-                <div className="mt-4">
+                <div className="mt-3 sm:mt-4">
                   <ErrorMessage message={error} onRetry={handleAnalyze} />
                 </div>
               )}
@@ -206,31 +206,31 @@ export default function Home() {
           </div>
 
           {/* Right column - Output */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 min-h-[500px]">
-            <h2 className="text-xl font-semibold mb-4">3D Physics Model</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 min-h-[400px] sm:min-h-[500px]">
+            <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">3D Physics Model</h2>
             
             {isAnalyzing ? (
               <Loading />
             ) : modelData ? (
               <div>
                 <PhysicsScene modelData={modelData} />
-                <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                  <h3 className="text-lg font-medium mb-2">Physics Properties</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                <div className="mt-3 sm:mt-4 p-3 sm:p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                  <h3 className="text-base sm:text-lg font-medium mb-2">Physics Properties</h3>
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-2">
                     Type: {modelData.physics.type}
                   </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                     Objects: {modelData.objects.length}
                   </p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-                    <strong>Tip:</strong> Use mouse to rotate, scroll to zoom, and right-click to pan.
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-2">
+                    <strong>Tip:</strong> Use mouse/touch to rotate, scroll/pinch to zoom, and right-click/two-finger drag to pan.
                   </p>
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center h-[400px] text-center">
+              <div className="flex flex-col items-center justify-center h-[300px] sm:h-[400px] text-center">
                 <svg
-                  className="w-16 h-16 mb-4 text-gray-400"
+                  className="w-12 h-12 sm:w-16 sm:h-16 mb-3 sm:mb-4 text-gray-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -243,8 +243,8 @@ export default function Home() {
                     d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"
                   ></path>
                 </svg>
-                <h3 className="text-lg font-medium">No 3D Model Yet</h3>
-                <p className="text-gray-500 dark:text-gray-400 mt-2 max-w-md">
+                <h3 className="text-base sm:text-lg font-medium">No 3D Model Yet</h3>
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-2 max-w-xs sm:max-w-sm md:max-w-md">
                   Upload a physics diagram and click &quot;Analyze with Gemini&quot; to generate a 3D model, or click &quot;Use Sample Data&quot; to see an example.
                 </p>
               </div>
